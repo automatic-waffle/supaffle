@@ -1,15 +1,6 @@
 {
-  "name": "@automatic-waffle/supaffle",
-  "version": "1.0.0",
-  "description": "",
-  "main": "bin/main.js",
-  "scripts": {
-    "dev": "nodemon bin/main.js",
-    "dev:debug": "nodemon --inspect bin/main.js",
-    "start": "node bin/main.js",
-    "start:debug": "node --inspect bin/main.js",
-    "build": "tsc"
-  },
+  "name": "supaffle",
+  "version": "0.0.1",
   "type": "module",
   "repository": {
     "type": "git",
@@ -17,31 +8,83 @@
   },
   "keywords": [],
   "author": "Andrii Shafar <andrii.shafar@uzhnu.edu.ua>",
+  "description": "",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/automatic-waffle/supaffle/issues"
   },
   "homepage": "https://github.com/automatic-waffle/supaffle#readme",
-  "devDependencies": {
-    "@types/node": "^16.3.1",
-    "nodemon": "^2.0.11",
-    "typescript": "^4.3.5"
+  "private": true,
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "update-types": "npx openapi-typescript https://tgkpplwyiqynshkfmcet.supabase.co/rest/v1/?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyNDI3NzY4MSwiZXhwIjoxOTM5ODUzNjgxfQ.m-RrLzFfBxDagttHNoPPbSmSzbUb-ugpEdZnxal-mi4 --output src/types/supabase.ts"
   },
   "dependencies": {
     "@logux/server": "^0.10.1",
+    "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^1.0.0",
+    "@nestjs/core": "^8.0.0",
+    "@nestjs/platform-express": "^8.0.0",
+    "@supabase/gotrue-js": "^1.16.6",
+    "@supabase/postgrest-js": "^0.33.0",
+    "@supabase/realtime-js": "^1.0.11",
+    "@supabase/storage-js": "^1.2.2",
     "@supabase/supabase-js": "^1.18.1",
-    "dotenv": "^10.0.0"
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
+    "rxjs": "^7.2.0"
   },
-  "nodemonConfig": {
-    "watch": [
-      "src"
+  "devDependencies": {
+    "@nestjs/cli": "^8.0.0",
+    "@nestjs/schematics": "^8.0.0",
+    "@nestjs/testing": "^8.0.0",
+    "@types/express": "^4.17.13",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.3.1",
+    "@types/supertest": "^2.0.11",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "eslint": "^7.30.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^27.0.6",
+    "openapi-typescript": "^4.0.2",
+    "prettier": "^2.3.2",
+    "supertest": "^6.1.3",
+    "ts-jest": "^27.0.3",
+    "ts-loader": "^9.2.3",
+    "ts-node": "^10.0.0",
+    "tsconfig-paths": "^3.10.1",
+    "typescript": "^4.3.5",
+    "webpack": "^5.0.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
     ],
-    "ignore": [
-      "src/**/*.test.ts",
-      "test/**/*.test.ts"
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
     ],
-    "ext": "ts,mjs,js,json,graphql",
-    "exec": "node",
-    "legacyWatch": false
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
   }
 }
